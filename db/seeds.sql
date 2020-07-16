@@ -1,0 +1,8 @@
+-- INSERT INTO departments (depName) VALUES ("Sales"), ("Engineering");
+-- INSERT INTO role (title, deptId, salary) VALUES ("Salesperson", 1, 80000), ("Engineer", 2, 100000);
+-- INSERT INTO employee (firstName, lastName, roleId, manager_id)
+ --   VALUES
+  --  ("John", "Doe", 1, 1),
+  --  ("Joe", "Rogan", 1, 2),
+   -- ("Pit", "Jupp", 2, 1),
+  --  ("Hansi", "Hintermeier", 2, 1);
