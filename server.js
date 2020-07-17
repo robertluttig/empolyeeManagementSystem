@@ -94,7 +94,7 @@ function addNewRole() {
     const query = "SELECT * FROM departments";
     connection.query(query, function (err, res) {
         if (err) {
-            console.log("Adding new role - ERROR occurred while retriving department data from database. " + err);
+            console.log("ERROR occurred" + err);
             connection.end();
         } else {
             const answers = inquirer.prompt([
@@ -130,6 +130,16 @@ function addNewRole() {
         }
     });
 }
+  function viewDepartments() {
+    const query = "SELECT * FROM departments";
+    connection.query(query, function (err, res) {
+      if (err) {
+        throw err;
+      }
+      console.table(res);
+      mainMenu();
+    });
+  };
   function viewAllRoles() {
     const query = "SELECT * FROM role";
     connection.query(query, function (err, res) {
@@ -137,7 +147,17 @@ function addNewRole() {
         throw err;
       }
       console.table(res);
-// go back to the menu
+      mainMenu();
+    });
+  };
+
+  function viewAllEmployees() {
+    const query = "SELECT * FROM employee";
+    connection.query(query, function (err, res) {
+      if (err) {
+        throw err;
+      }
+      console.table(res);
       mainMenu();
     });
   };
