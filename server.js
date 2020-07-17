@@ -46,8 +46,8 @@ const connection = mysql.createConnection({
             addNewRole();
             break;
         case "Add an employee":
-                addEmployee();
-                break;
+            addEmployee();
+            break;
         case "View all departments":
             viewDepartments();
             break;
@@ -88,9 +88,50 @@ function addNewDepartment() {
         });
       });
     };
-// view all departments
-function viewDepartments() {
+
+//Add a new role
+function addNewRole() {
     const query = "SELECT * FROM departments";
+    connection.query(query, function (err, res) {
+        if (err) {
+            console.log("Adding new role - ERROR occurred while retriving department data from database. " + err);
+            connection.end();
+        } else {
+            const answers = inquirer.prompt([
+                {
+                    type: "input",
+                    message: "What role would you like to add?",
+                    name: "role"
+                },
+                {
+                    type: "input",
+                    message: "What salary would you like the role to have?",
+                    name: "salary"
+                },
+                {
+                    type: "input",
+                    message: "What is the department id?",
+                    name: "deptId"
+                }
+            ]).then(answers => {
+
+                const query = "INSERT INTO role SET title=?, salary=?, deptId=?";
+
+                connection.query(query, [answers.role, answers.salary, answers.deptId], function (err, res) {
+                    if (err) {
+                        console.log("ERROR occurred" + err);
+                        connection.end();
+                    } else {
+                        console.log("SUCCESS!!!! New role has been added");
+                    }
+                    mainMenu();
+                });
+            });
+        }
+    });
+}
+  function viewAllRoles() {
+    const query = "SELECT * FROM role";
     connection.query(query, function (err, res) {
       if (err) {
         throw err;

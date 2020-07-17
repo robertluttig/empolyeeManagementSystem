@@ -4,7 +4,7 @@ use management_db;
 
 CREATE TABLE departments (
     id INT AUTO_INCREMENT NOT NULL,
-    name VARCHAR(30) NOT NULL,
+    depName VARCHAR(30) NOT NULL,
     PRIMARY KEY (id)
 );
 
