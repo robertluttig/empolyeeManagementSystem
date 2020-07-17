@@ -18,7 +18,7 @@ const connection = mysql.createConnection({
       mainMenu();
     }
   });
-  // List of constants for the different main menu action options
+// User main menu function with choice questions
   function mainMenu() {
     inquirer
       .prompt({
@@ -36,6 +36,7 @@ const connection = mysql.createConnection({
           "Exit",
         ],
       })
+// switch board for user input
       .then((answer) => {
         switch (answer.action) {
           case "Add a new department":
@@ -66,3 +67,36 @@ const connection = mysql.createConnection({
       });
 
     }
+
+//Add a new department
+function addNewDepartment() {
+    inquirer
+      .prompt({
+        name: "department",
+        type: "input",
+        message: "What is the department name?",
+      })
+      .then(function (answer) {
+        const query = `INSERT INTO departments(depName) VALUES (?)`;
+        connection.query(query, answer.department, function (err, res) {
+          if (err) {
+            throw err;
+          }
+          console.log("Department was added successfully");
+// go back to the menu  
+          mainMenu();
+        });
+      });
+    };
+// view all departments
+function viewDepartments() {
+    const query = "SELECT * FROM departments";
+    connection.query(query, function (err, res) {
+      if (err) {
+        throw err;
+      }
+      console.table(res);
+// go back to the menu
+      mainMenu();
+    });
+  };
