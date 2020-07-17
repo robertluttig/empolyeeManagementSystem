@@ -130,6 +130,74 @@ function addNewRole() {
         }
     });
 }
+// Add new Employee
+function addEmployee() {
+    const query = "SELECT * FROM employee";
+    connection.query(query, function (err, res) {
+        if (err) {
+            console.log("ERROR occurred" + err);
+            connection.end();
+        } else {
+            const answers = inquirer.prompt([
+                {
+                    type: "input",
+                    message: "What is the employee's first name?",
+                    name: "firstName"
+                },
+                {
+                    type: "input",
+                    message: "What is the employee's last name?",
+                    name: "lastName"
+                },
+                {
+                    type: "input",
+                    message: "What is the role id?",
+                    name: "roleId"
+                },
+                {
+                    type: "input",
+                    message: "What is the managers id?",
+                    name: "manager_id"
+                }
+            ]).then(answers => {
+
+                const query = "INSERT INTO employee SET firstName=?, lastName=?, roleId=?,manager_id=?";
+
+                connection.query(query, [answers.firstName, answers.lastName, answers.roleId, answers.manager_id], function (err, res) {
+                    if (err) {
+                        console.log("ERROR occurred" + err);
+                        connection.end();
+                    } else {
+                        console.log("SUCCESS!!!! New employee has been added");
+                    }
+                    mainMenu();
+                });
+            });
+        }
+    });
+}
+  function viewDepartments() {
+    const query = "SELECT * FROM departments";
+    connection.query(query, function (err, res) {
+      if (err) {
+        throw err;
+      }
+      console.table(res);
+      mainMenu();
+    });
+  };
+  function viewAllRoles() {
+    const query = "SELECT * FROM role";
+    connection.query(query, function (err, res) {
+      if (err) {
+        throw err;
+      }
+      console.table(res);
+      mainMenu();
+    });
+  };
+
+
   function viewDepartments() {
     const query = "SELECT * FROM departments";
     connection.query(query, function (err, res) {
